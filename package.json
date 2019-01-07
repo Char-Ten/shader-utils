@@ -1,0 +1,33 @@
+{
+  "name": "webgl-dev-utils",
+  "version": "0.0.1",
+  "description": "some useful utils about webgl",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Char-Ten/shader-utils.git"
+  },
+  "keywords": [
+    "shader",
+    "webgl",
+    "utils"
+  ],
+  "author": "charten",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Char-Ten/shader-utils/issues"
+  },
+  "homepage": "https://github.com/Char-Ten/shader-utils#readme",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "rollup": "^1.0.1",
+    "rollup-plugin-babel": "^4.2.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-uglify": "^6.0.0"
+  }
+}

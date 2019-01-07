@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>shader-utils usage</title>
+    </head>
+    <body>
+        <script src="../lib/index.js"></script>
+        <script>
+            //快速创建一个webgl开发环境
+            const canvas = document.createElement('canvas');
+            const gl = canvas.getContext('webgl');
+			const vertexShaderCode = `
+precision mediump float;
+attribute vec2 a_position;
+void main(){
+	gl_Position =vec4(a_position,0.0,1.0);
+}
+`;
+			const fragmentShaderCode = `
+precision mediump float;
+uniform vec4 u_color;
+void main(){
+	gl_FragColor = u_color;
+}
+`;
+
+            //创建着色器程序
+            const program = webglUtils.createProgram(
+                gl,
+                vertexShaderCode,
+                fragmentShaderCode
+            );
+
+            //创建顶点
+            const points = new Float32Array([-1, -1, 1, -1, 1, 1, -1, 1]);
+
+            //创建数组缓冲区
+            const buffer = webglUtils.createArrayBuffer(gl, points);
+
+            //设置画布大小
+            const width = 400;
+            const height = 300;
+
+            //设置颜色[r,g,b,a]，最大值为1，最小值为0
+            const color = [1, 0, 0, 1];
+
+            canvas.width = width;
+            canvas.height = height;
+			document.body.appendChild(canvas);
+			
+			//使用程序
+			gl.useProgram(program);
+
+			//往顶点着色器传attribute变量
+            webglUtils.setProgramAttribute(gl, program, {
+                a_position: {
+                    type: 'pointer',
+                    value: [2, gl.FLOAT, false, 0, 0]
+                }
+			});
+			
+			//往着色器里面传uniform变量 
+            webglUtils.setProgramUniform(gl, program, {
+                u_color: {
+                    type: 'float',
+                    value: color
+                }
+            });
+
+			//设置视口
+			gl.viewport(0, 0, width, height);
+			
+			//绘制
+            gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
+        </script>
+    </body>
+</html>
