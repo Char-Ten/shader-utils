@@ -28,7 +28,7 @@ export function createShader(gl, program, source, type) {
     const shader = gl.createShader(type);
     gl.shaderSource(shader, source);
     gl.compileShader(shader);
-	gl.attachShader(program, shader);
+    gl.attachShader(program, shader);
     return shader;
 }
 
@@ -42,8 +42,22 @@ export function createShader(gl, program, source, type) {
 export function createArrayBuffer(gl, data, usage) {
     const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-	gl.bufferData(gl.ARRAY_BUFFER, data, usage || gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, data, usage || gl.STATIC_DRAW);
     return buffer;
+}
+
+/**
+ * @todo 更新缓冲数据
+ * @param {WebGLRenderingContext} gl
+ * @param {WebGLBuffer} buffer
+ * @param {*} data
+ * @param {*} usage
+ * @returns {WebGLBuffer}
+ */
+export function updateArrayBuffer(gl, buffer, data, usage) {
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, data, usage || gl.STATIC_DRAW);
+    return buffer
 }
 
 /**
@@ -55,7 +69,7 @@ export function createArrayBuffer(gl, data, usage) {
 export function createTextureByImage(gl, image) {
     var texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
-	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
     return checkTexture(gl, texture, image.width, image.height);
 }
 
